@@ -30,11 +30,6 @@ class PostViewsTests(TestCase):
             text="Тестовый пост",
             group=cls.group,
         )
-        cls.new_post = Post.objects.create(
-            author=cls.author,
-            text='Новый пост 2',
-            group=cls.group,
-        )
         cls.post_create_urls = {
             reverse('posts:index'): 'posts/index.html',
             reverse(
