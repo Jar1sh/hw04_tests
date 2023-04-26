@@ -102,7 +102,7 @@ class PostViewsTests(TestCase):
         response = self.authorized_client.get(
             reverse(
                 'posts:profile',
-                kwargs={'username': self.author}
+                kwargs={'username': self.author.username}
             )
         )
         self.assertEqual(response.context['author'], self.author)
@@ -139,45 +139,6 @@ class PostViewsTests(TestCase):
                 form_field = form.fields.get(value)
                 self.assertIsInstance(form_field, expected)
                 self.assertTrue(response.context.get('is_edit'))
-
-
-class PostViewsTests(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.author = User.objects.create_user(
-            username='Test_name',
-            email='test@gmail.com',
-            password='password',
-        )
-        cls.group = Group.objects.create(
-            title='Первая группа',
-            slug='test_slug',
-            description='Тестовое описание',
-        )
-        cls.group2 = Group.objects.create(
-            title='Вторая группа',
-            slug='test_slug_two',
-            description='Описание второй группы'
-        )
-        cls.post = Post.objects.create(
-            author=cls.author,
-            text="Тестовый пост",
-            group=cls.group,
-        )
-        cls.post_create_urls = {
-            reverse('posts:index'): 'posts/index.html',
-            reverse(
-                'posts:profile', kwargs={'username': cls.author.username}):
-                    'posts/profile.html',
-            reverse(
-                'posts:group_list', kwargs={'slug': cls.group.slug}):
-                    'posts/group_list.html',
-        }
-
-    def setUp(self):
-        self.authorized_client = Client()
-        self.authorized_client.force_login(self.author)
 
     def test_new_post_is_shown(self):
         """Протестируйте, что если при создании поста указать группу,

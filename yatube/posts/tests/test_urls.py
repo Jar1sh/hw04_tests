@@ -33,7 +33,7 @@ class PostUrlsTests(TestCase):
         cls.urls_names_guest = {
             '/': 'posts/index.html',
             f'/group/{cls.group.slug}/': 'posts/group_list.html',
-            f'/profile/{cls.author}/': 'posts/profile.html',
+            f'/profile/{cls.author.username}/': 'posts/profile.html',
             f'/posts/{cls.post.pk}/': 'posts/post_detail.html',
         }
         cls.urls_names_authorized = {
